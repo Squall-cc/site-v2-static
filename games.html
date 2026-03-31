@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Games</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
+<link rel="stylesheet" href="glass.css">
+<script src="theme.js"></script>
+<style>
+
+  /* uhh i read somewhere this typa shit fixes firefox issues*/
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:             #3b4252;
+    --bg-deep:        #2e3440;
+    --bg-deeper:      #242933; /* uhh this aint in nord color pallete but its the bg of the nord website*/
+    --border:         #5e81ac;
+    --text:           #eceff4;
+    --text-dim:       #e5e9f0;
+    --text-muted:     #d8dee9;
+    --accent:         #5e81ac;
+  }
+
+  body { background: var(--bg); color: var(--text); font-family: 'Readex Pro', sans-serif; }
+
+  .top-bar, .grid, .section {
+    position: relative;
+    z-index: 1;
+  }
+  .top-bar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 24px; background: var(--bg-deep); border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .top-bar h1 { font-size: 18px; font-weight: 700; margin-right: auto; }
+  .top-bar input {
+    padding: 8px 14px; border-radius: 10px; border: 2px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: 14px; width: 220px; outline: none;
+  }
+  .top-bar input::placeholder { color: var(--text-muted); }
+  .top-bar input:focus { border-color: var(--accent); }
+
+  #source {
+    padding: 8px 14px; border-radius: 10px; border: 2px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: 14px; cursor: pointer; outline: none;
+    font-family: inherit;
+  }
+  #source:focus { border-color: var(--accent); }
+
+  #grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 16px; padding: 24px;
+    position: relative; z-index: 1;
+  }
+
+  .card {
+    border-radius: 12px; overflow: hidden;
+    cursor: pointer; transition: transform .15s;
+    text-decoration: none; color: inherit;
+    border: 2px solid var(--border);
+    position: relative;
+  }
+  .card:hover { transform: translateY(-4px) scale(1.05); }
+  .card img {
+    width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+    background: var(--bg);
+  }
+  .card span {
+    display: block; padding: 10px 12px; font-size: 13px; font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .fav-btn {
+    position: absolute; top: 6px; right: 6px;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(0,0,0,.55); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .15s;
+    z-index: 2; padding: 0;
+  }
+  .card:hover .fav-btn { opacity: 1; }
+  .fav-btn.active { opacity: 1; }
+  .fav-btn i { font-size: 14px; color: #eceff4; }
+  .fav-btn.active i { color: #ebcb8b; }
+
+  #count { font-size: 13px; color: var(--text-muted); }
+
+  html { scroll-behavior: auto; }
+</style>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js" defer></script>
+</head>
+<body>
+
+<div id="vanta-bg" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;"></div>
+
+<div class="top-bar">
+  <h1>games</h1>
+  <span id="count"></span>
+  <input type="text" id="search" placeholder="Search games..." oninput="filterGames()">
+  <select id="source" onchange="load(this.value)">
+    <option value="__gnmath__">gn-math</option>
+    <option value="__favorites__">Favorites</option>
+  </select>
+</div>
+
+<div id="grid"></div>
+
+
+<script>
+  let allGames = [];
+
+  function getFavs() {
+    try { return JSON.parse(localStorage.getItem('fav-games') || '[]'); } catch { return []; }
+  }
+  function setFavs(favs) { localStorage.setItem('fav-games', JSON.stringify(favs)); }
+  function isFav(name) { return getFavs().includes(name); }
+  function toggleFav(name) {
+    let favs = getFavs();
+    if (favs.includes(name)) favs = favs.filter(f => f !== name);
+    else favs.push(name);
+    setFavs(favs);
+  }
+
+  const GNMATH_URL = 'https://unpkg.com/gn-math-dontdmca@1.0.1/assets/zones.json';
+  const COVER_URL = 'https://cdn.jsdelivr.net/gh/gn-math/covers@main';
+  const HTML_URL = 'https://cdn.jsdelivr.net/gh/gn-math/html@main';
+
+  async function fetchGnmath() {
+    const res = await fetch(GNMATH_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    const raw = Array.isArray(data) ? data : (data.games || []);
+    return raw.map(g => ({
+      name: g.name,
+      url: (g.url || '').replace('{HTML_URL}', HTML_URL).replace('{COVER_URL}', COVER_URL),
+      thumbnail: (g.cover || '').replace('{COVER_URL}', COVER_URL).replace('{HTML_URL}', HTML_URL)
+    }));
+  }
+
+  async function load(file) {
+    if (file === '__favorites__') {
+      try {
+        const all = await fetchGnmath();
+        const favs = getFavs();
+        allGames = all.filter(g => favs.includes(g.name));
+      } catch (e) {
+        allGames = [];
+      }
+      document.getElementById('search').value = '';
+      renderGames(allGames);
+      return;
+    }
+
+    try {
+      allGames = await fetchGnmath();
+    } catch (e) {
+      allGames = [];
+      console.error('Failed to load gn-math', e);
+      document.getElementById('grid').innerHTML =
+        '<p style="padding:24px;color:#bf616a;grid-column:1/-1;">Failed to load gn-math: ' + e.message + '</p>';
+      document.getElementById('count').textContent = '0 games';
+      return;
+    }
+    document.getElementById('search').value = '';
+    renderGames(allGames);
+  }
+
+  function filterGames() {
+    const q = document.getElementById('search').value.toLowerCase();
+    const filtered = allGames.filter(g => g.name.toLowerCase().includes(q));
+    renderGames(filtered);
+  }
+
+  function starIcon(active) { return `<i class="fa-${active ? 'solid' : 'regular'} fa-star"></i>`; }
+
+  function renderGames(games) {
+    const grid = document.getElementById('grid');
+    document.getElementById('count').textContent = games.length + ' games';
+    grid.innerHTML = games.map(g => {
+      const href = 'frame.html?url=' + encodeURIComponent(g.url);
+      const active = isFav(g.name) ? ' active' : '';
+      const fav = isFav(g.name);
+      return `<a class="card" href="${href}">
+        <button class="fav-btn${fav ? ' active' : ''}" data-name="${g.name.replace(/"/g, '&quot;')}" title="Toggle favorite">${starIcon(fav)}</button>
+        <img src="${g.thumbnail}" alt="${g.name}" loading="lazy" onerror="this.style.display='none'">
+        <span>${g.name}</span>
+      </a>`;
+    }).join('');
+  }
+
+  document.getElementById('grid').addEventListener('click', function(e) {
+    const btn = e.target.closest('.fav-btn');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFav(btn.dataset.name);
+    btn.classList.toggle('active');
+    const nowActive = btn.classList.contains('active');
+    btn.innerHTML = starIcon(nowActive);
+  });
+
+  const hoverAudio = new Audio('hover.wav');
+  hoverAudio.volume = 0.3;
+  document.getElementById('grid').addEventListener('mouseover', function(e) {
+    const card = e.target.closest('.card');
+    if (card && localStorage.getItem('hover-sound') === 'on') {
+      hoverAudio.currentTime = 0;
+      hoverAudio.play().catch(() => {});
+    }
+  });
+
+  load('__gnmath__');
+
+  // ido lenis after it loads
+  window.addEventListener('DOMContentLoaded', function() {
+    if (typeof Lenis !== 'undefined') {
+      var lenis = new Lenis({ lerp: 0.06, smoothWheel: true }); // the smooth scrolling library from the gta 6 website btw
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+    }
+  });
+</script>
+<script>
+  // lazy-load vanta
+  function loadVanta() {
+    var s1 = document.createElement('script');
+    s1.src = 'https://unpkg.com/p5@1.9.4/lib/p5.min.js';
+    s1.onload = function() {
+      var s2 = document.createElement('script');
+      s2.src = 'https://unpkg.com/vanta@0.5.24/dist/vanta.topology.min.js';
+      s2.onload = function() {
+        try {
+          var _vc = getVantaColors();
+          window._vantaEffect = VANTA.TOPOLOGY({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: _vc.color,
+            backgroundColor: _vc.backgroundColor
+          });
+        } catch(e) { console.warn('Vanta failed to init:', e); }
+      };
+      document.head.appendChild(s2);
+    };
+    document.head.appendChild(s1);
+  }
+  function tryLoadVanta() {
+    if (navigator.getBattery) {
+      navigator.getBattery().then(function(b) {
+        if (b.charging || b.level >= 0.25) loadVanta();
+      });
+    } else { loadVanta(); }
+  }
+  if (document.readyState === 'complete') tryLoadVanta();
+  else window.addEventListener('load', tryLoadVanta);
+</script>
+
+</body>
+</html>
