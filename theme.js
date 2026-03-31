@@ -76,6 +76,19 @@ var THEMES = {
             '--accent-hover': '#d8befc', '--error': '#f38ba8',
             '--tab-active-bg': '#313244', '--text-on-active': '#cdd6f4'
         }
+    },
+    'everforest': {
+        name: 'Everforest',
+        swatches: ['#272E33', '#A7C080', '#7FBBB3', '#E67E80', '#D3C6AA'],
+        vantaColor: 0xA7C080, vantaBg: 0x272E33,
+        vars: {
+            '--bg': '#272E33', '--bg-deep': '#1E2326', '--bg-deeper': '#1A1F22',
+            '--border': '#414B50', '--text': '#D3C6AA', '--text-dim': '#9DA9A0',
+            '--text-muted': '#859289', '--accent': '#A7C080', '--green': '#83C092', '--red': '#E67E80',
+            '--surface': 'rgba(30,35,38,0.3)', '--border-glass': 'rgba(167,192,128,0.35)',
+            '--accent-hover': '#B5CC95', '--error': '#E67E80',
+            '--tab-active-bg': '#374145', '--text-on-active': '#D3C6AA'
+        }
     }
 };
 
@@ -105,11 +118,11 @@ function applyTheme(id, reload) {
 }
 
 function getVantaColors() {
-    var t = THEMES[localStorage.getItem('theme')] || THEMES['catppuccin-mocha'];
+    var t = THEMES[localStorage.getItem('theme')] || THEMES['everforest'];
     return { color: t.vantaColor, backgroundColor: t.vantaBg };
 }
 
 (function() {
     var saved = localStorage.getItem('theme');
-    applyTheme(saved && THEMES[saved] ? saved : 'catppuccin-mocha');
+    applyTheme(saved && THEMES[saved] ? saved : 'everforest');
 })();
