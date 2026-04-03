@@ -25,19 +25,6 @@ var THEMES = {
 //            '--tab-active-bg': '#e8ddd5', '--text-on-active': '#464261'
 //        }
 //    },
-    'catppuccin-latte': {
-        name: 'C. Latte',
-        swatches: ['#eff1f5', '#8839ef', '#40a02b', '#d20f39', '#4c4f69'],
-        vantaColor: 0x8839ef, vantaBg: 0xeff1f5,
-        vars: {
-            '--bg': '#eff1f5', '--bg-deep': '#e6e9ef', '--bg-deeper': '#dce0e8',
-            '--border': '#ccd0da', '--text': '#4c4f69', '--text-dim': '#5c5f77',
-            '--text-muted': '#6c6f85', '--accent': '#8839ef', '--green': '#40a02b', '--red': '#d20f39',
-            '--surface': 'rgba(230,233,239,0.3)', '--border-glass': 'rgba(136,57,239,0.35)',
-            '--accent-hover': '#9d53f0', '--error': '#d20f39',
-            '--tab-active-bg': '#ccd0da', '--text-on-active': '#4c4f69'
-        }
-    },
     'catppuccin-frappe': {
         name: 'C. Frappe',
         swatches: ['#303446', '#ca9ee6', '#a6d189', '#e78284', '#c6d0f5'],
@@ -77,17 +64,82 @@ var THEMES = {
             '--tab-active-bg': '#313244', '--text-on-active': '#cdd6f4'
         }
     },
-    'everforest': {
-        name: 'Everforest',
-        swatches: ['#272E33', '#A7C080', '#7FBBB3', '#E67E80', '#D3C6AA'],
-        vantaColor: 0xA7C080, vantaBg: 0x272E33,
+    'ef-dark-soft': {
+        name: 'EF Dark Soft',
+        swatches: ['#333c43', '#A7C080', '#83C092', '#E67E80', '#D3C6AA'],
+        vantaColor: 0xA7C080, vantaBg: 0x333c43,
         vars: {
-            '--bg': '#272E33', '--bg-deep': '#1E2326', '--bg-deeper': '#1A1F22',
+            '--bg': '#333c43', '--bg-deep': '#293136', '--bg-deeper': '#222a2f',
+            '--border': '#4d5960', '--text': '#D3C6AA', '--text-dim': '#9DA9A0',
+            '--text-muted': '#859289', '--accent': '#A7C080', '--green': '#83C092', '--red': '#E67E80',
+            '--surface': 'rgba(41,49,54,0.3)', '--border-glass': 'rgba(167,192,128,0.35)',
+            '--accent-hover': '#B5CC95', '--error': '#E67E80',
+            '--tab-active-bg': '#434f55', '--text-on-active': '#D3C6AA'
+        }
+    },
+    'ef-dark-medium': {
+        name: 'EF Dark Med',
+        swatches: ['#2d353b', '#A7C080', '#83C092', '#E67E80', '#D3C6AA'],
+        vantaColor: 0xA7C080, vantaBg: 0x2d353b,
+        vars: {
+            '--bg': '#2d353b', '--bg-deep': '#232a2e', '--bg-deeper': '#1c2226',
+            '--border': '#475258', '--text': '#D3C6AA', '--text-dim': '#9DA9A0',
+            '--text-muted': '#859289', '--accent': '#A7C080', '--green': '#83C092', '--red': '#E67E80',
+            '--surface': 'rgba(35,42,46,0.3)', '--border-glass': 'rgba(167,192,128,0.35)',
+            '--accent-hover': '#B5CC95', '--error': '#E67E80',
+            '--tab-active-bg': '#3d484d', '--text-on-active': '#D3C6AA'
+        }
+    },
+    'ef-dark-hard': {
+        name: 'EF Dark Hard',
+        swatches: ['#272e33', '#A7C080', '#83C092', '#E67E80', '#D3C6AA'],
+        vantaColor: 0xA7C080, vantaBg: 0x272e33,
+        vars: {
+            '--bg': '#272e33', '--bg-deep': '#1E2326', '--bg-deeper': '#1A1F22',
             '--border': '#414B50', '--text': '#D3C6AA', '--text-dim': '#9DA9A0',
             '--text-muted': '#859289', '--accent': '#A7C080', '--green': '#83C092', '--red': '#E67E80',
             '--surface': 'rgba(30,35,38,0.3)', '--border-glass': 'rgba(167,192,128,0.35)',
             '--accent-hover': '#B5CC95', '--error': '#E67E80',
             '--tab-active-bg': '#374145', '--text-on-active': '#D3C6AA'
+        }
+    },
+    'ef-light-soft': {
+        name: 'EF Light Soft',
+        swatches: ['#f3ead3', '#8DA101', '#35A77C', '#F85552', '#5C6A72'],
+        vantaColor: 0x8DA101, vantaBg: 0xf3ead3,
+        vars: {
+            '--bg': '#f3ead3', '--bg-deep': '#e5dfc5', '--bg-deeper': '#ddd8be',
+            '--border': '#b9c0ab', '--text': '#5C6A72', '--text-dim': '#829181',
+            '--text-muted': '#939F91', '--accent': '#8DA101', '--green': '#35A77C', '--red': '#F85552',
+            '--surface': 'rgba(229,223,197,0.3)', '--border-glass': 'rgba(141,161,1,0.35)',
+            '--accent-hover': '#7A8E00', '--error': '#F85552',
+            '--tab-active-bg': '#eae4ca', '--text-on-active': '#5C6A72'
+        }
+    },
+    'ef-light-medium': {
+        name: 'EF Light Med',
+        swatches: ['#fdf6e3', '#8DA101', '#35A77C', '#F85552', '#5C6A72'],
+        vantaColor: 0x8DA101, vantaBg: 0xfdf6e3,
+        vars: {
+            '--bg': '#fdf6e3', '--bg-deep': '#efebd4', '--bg-deeper': '#e6e2cc',
+            '--border': '#bdc3af', '--text': '#5C6A72', '--text-dim': '#829181',
+            '--text-muted': '#939F91', '--accent': '#8DA101', '--green': '#35A77C', '--red': '#F85552',
+            '--surface': 'rgba(239,235,212,0.3)', '--border-glass': 'rgba(141,161,1,0.35)',
+            '--accent-hover': '#7A8E00', '--error': '#F85552',
+            '--tab-active-bg': '#f4f0d9', '--text-on-active': '#5C6A72'
+        }
+    },
+    'ef-light-hard': {
+        name: 'EF Light Hard',
+        swatches: ['#FFFBEF', '#8DA101', '#35A77C', '#F85552', '#5C6A72'],
+        vantaColor: 0x8DA101, vantaBg: 0xFFFBEF,
+        vars: {
+            '--bg': '#FFFBEF', '--bg-deep': '#F2EFDF', '--bg-deeper': '#EDEADA',
+            '--border': '#BEC5B2', '--text': '#5C6A72', '--text-dim': '#829181',
+            '--text-muted': '#939F91', '--accent': '#8DA101', '--green': '#35A77C', '--red': '#F85552',
+            '--surface': 'rgba(242,239,223,0.3)', '--border-glass': 'rgba(141,161,1,0.35)',
+            '--accent-hover': '#7A8E00', '--error': '#F85552',
+            '--tab-active-bg': '#F8F5E4', '--text-on-active': '#5C6A72'
         }
     }
 };
@@ -101,8 +153,19 @@ function applyTheme(id, reload) {
         root.setProperty(keys[i], theme.vars[keys[i]]);
     }
     localStorage.setItem('theme', id);
-    if (window._vantaEffect) {
+    if (window._vantaEffect && window._vantaEffect.setOptions) {
         window._vantaEffect.setOptions({ color: theme.vantaColor, backgroundColor: theme.vantaBg });
+    } else if (window._vantaEffect) {
+        // vanta-modified doesn't have setOptions, destroy and recreate
+        try {
+            window._vantaEffect.destroy();
+            window._vantaEffect = VANTA.TOPOLOGY({
+                el: "#vanta-bg",
+                mouseControls: true, touchControls: true, gyroControls: false,
+                minHeight: 200, minWidth: 200, scale: 1, scaleMobile: 1,
+                color: theme.vantaColor, backgroundColor: theme.vantaBg,
+            });
+        } catch(e) {}
     }
     var cards = document.querySelectorAll('.theme-card');
     for (var j = 0; j < cards.length; j++) {
@@ -110,19 +173,19 @@ function applyTheme(id, reload) {
     }
     if (reload) {
         if (window.self !== window.top) {
-            window.parent.postMessage({ type: 'theme-change' }, '*');
+            window.parent.postMessage({ type: 'theme-change', theme: id }, '*');
         } else {
-            window.location.href = window.location.href;
+            window.location.reload();
         }
     }
 }
 
 function getVantaColors() {
-    var t = THEMES[localStorage.getItem('theme')] || THEMES['everforest'];
+    var t = THEMES[localStorage.getItem('theme')] || THEMES['ef-dark-soft'];
     return { color: t.vantaColor, backgroundColor: t.vantaBg };
 }
 
 (function() {
     var saved = localStorage.getItem('theme');
-    applyTheme(saved && THEMES[saved] ? saved : 'everforest');
+    applyTheme(saved && THEMES[saved] ? saved : 'ef-dark-soft');
 })();

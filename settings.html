@@ -204,7 +204,6 @@
                 flex-shrink: 0;
             }
         </style>
-        <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js" defer></script>
     </head>
     <body>
         <div id="vanta-bg" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0"></div>
@@ -397,7 +396,7 @@
 
             function renderThemes() {
                 var grid = document.getElementById('theme-grid');
-                var active = localStorage.getItem('theme') || 'nord';
+                var active = localStorage.getItem('theme') || 'ef-dark-soft';
                 var ids = Object.keys(THEMES);
                 for (var i = 0; i < ids.length; i++) {
                     var id = ids[i];
@@ -417,41 +416,28 @@
 
             renderThemes();
 
-            // do lenis after it loads
-            window.addEventListener('DOMContentLoaded', function() {
-                if (typeof Lenis !== 'undefined') {
-                    var lenis = new Lenis({ lerp: 0.06, smoothWheel: true });
-                    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-                    requestAnimationFrame(raf);
-                }
-            });
             // lazy-load vanta
             function loadVanta() {
-                var s1 = document.createElement('script');
-                s1.src = 'https://unpkg.com/p5@1.9.4/lib/p5.min.js';
-                s1.onload = function() {
-                    var s2 = document.createElement('script');
-                    s2.src = 'https://unpkg.com/vanta@0.5.24/dist/vanta.topology.min.js';
-                    s2.onload = function() {
-                        try {
-                            var _vc = getVantaColors();
-                            window._vantaEffect = VANTA.TOPOLOGY({
-                                el: "#vanta-bg",
-                                mouseControls: true,
-                                touchControls: true,
-                                gyroControls: false,
-                                minHeight: 200,
-                                minWidth: 200,
-                                scale: 1,
-                                scaleMobile: 1,
-                                color: _vc.color,
-                                backgroundColor: _vc.backgroundColor,
-                            });
-                        } catch(e) { console.warn('Vanta failed to init:', e); }
-                    };
-                    document.head.appendChild(s2);
+                var s = document.createElement('script');
+                s.src = '/vanta-modified.js';
+                s.onload = function() {
+                    try {
+                        var _vc = getVantaColors();
+                        window._vantaEffect = VANTA.TOPOLOGY({
+                            el: "#vanta-bg",
+                            mouseControls: true,
+                            touchControls: true,
+                            gyroControls: false,
+                            minHeight: 200,
+                            minWidth: 200,
+                            scale: 1,
+                            scaleMobile: 1,
+                            color: _vc.color,
+                            backgroundColor: _vc.backgroundColor,
+                        });
+                    } catch(e) { console.warn('Vanta failed to init:', e); }
                 };
-                document.head.appendChild(s1);
+                document.head.appendChild(s);
             }
             function tryLoadVanta() {
                 if (navigator.getBattery) {

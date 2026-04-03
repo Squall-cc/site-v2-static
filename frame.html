@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Truffled</title>
+    <title>squall frame</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&display=swap" rel="stylesheet">
@@ -47,26 +47,27 @@
             justify-content: flex-end;
             align-items: center;
             padding: 6px 12px;
-            background: #2e3440;
-            border-top: 1px solid #5e81ac;
+            background: var(--bg-deep, #2e3440);
+            border-top: 1px solid var(--border, #5e81ac);
             gap: 12px;
         }
 
         .bottom-bar a {
-            color: #d8dee9;
+            color: var(--text-muted, #d8dee9);
             font-size: 1rem;
             text-decoration: none;
             transition: color 0.15s;
         }
 
         .bottom-bar a:hover {
-            color: #eceff4;
+            color: var(--text, #eceff4);
         }
 
         .bottom-bar a.copied {
-            color: #a3be8c;
+            color: var(--green, #a3be8c);
         }
     </style>
+    <script src="/theme.js"></script>
 </head>
 <body>
     <div class="content">
@@ -108,10 +109,10 @@
                         useSrcdoc = false;
                         document.getElementById('gameframe').src = '/404.html?q=' + encodeURIComponent(url);
                     });
-            } else {
-                loadedUrl = url;
-                document.getElementById('gameframe').src = url;
-            }
+                } else {
+                    loadedUrl = url;
+                    document.getElementById('gameframe').src = '/404.html?q=' + encodeURIComponent(url);
+                }
         }
 
         document.getElementById('fullscreen').addEventListener('click', function () {
@@ -152,7 +153,7 @@
                 });
             } else {
                 copyBtn.innerHTML = '<i class="fas fa-times"></i>';
-                copyBtn.style.color = '#bf616a';
+                copyBtn.style.color = 'var(--red, #bf616a)';
                 setTimeout(function () { copyBtn.innerHTML = originalHTML; copyBtn.style.color = ''; }, 1500);
             }
         });
@@ -175,6 +176,5 @@
             win.document.title = 'New Tab';
         });
     </script>
-    <script src="/js/file.js" defer></script>
 </body>
 </html>
