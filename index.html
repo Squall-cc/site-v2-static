@@ -556,12 +556,10 @@ if (window.self !== window.top) {
     center.appendChild(input);
 
     const shortcuts = [
-      { label: 'tiktok', url: 'https://tiktok.com/', icon: '/tiktok.ico', iconDirect: '/tiktok.ico' },
-      { label: 'movies / tv', url: '/movies/', icon: '/movie.png', iconDirect: '/movie.png' },
-      { label: 'music', url: 'https://monochrome.tf/', icon: '/music.png', iconDirect: '/music.png' },
-      { label: 'discord', url: 'https://discord.com/', icon: '/discord.jpg', iconDirect: '/discord.jpg' },
-      { label: 'games', url: '/games.html', icon: null, iconDirect: null },
-      { label: 'settings', url: '/settings.html', icon: '/settings.png', iconDirect: '/settings.png' }]
+      { label: 'apps', url: '/apps.html', fa: 'fa-solid fa-table-cells' },
+      { label: 'games', url: '/games.html', fa: 'fa-solid fa-gamepad' },
+      { label: 'settings', url: '/settings.html', fa: 'fa-solid fa-gear' },
+    ];
 
     const row = document.createElement('div');
     row.className = 'shortcut-row';
@@ -570,9 +568,7 @@ if (window.self !== window.top) {
       const btn = document.createElement('button');
       btn.className = 'shortcut-btn';
 
-      const iconEl = s.iconDirect
-        ? Object.assign(document.createElement('img'), { src: s.iconDirect, alt: s.label })
-        : Object.assign(document.createElement('i'), { className: 'fa-solid fa-gamepad', style: 'font-size:20px' });
+      const iconEl = Object.assign(document.createElement('i'), { className: s.fa, style: 'font-size:20px' });
 
       const label = document.createElement('span');
       label.textContent = s.label;
@@ -580,12 +576,11 @@ if (window.self !== window.top) {
       btn.appendChild(iconEl);
       btn.appendChild(label);
       btn.addEventListener('click', () => {
-        const isExternal = s.url.startsWith('http://') || s.url.startsWith('https://');
-        const dest = isExternal ? '/404.html?q=' + encodeURIComponent(s.url) : s.url;
+        const proxyUrl = (s.url === '/games.html' || s.url === '/apps.html' || s.url === '/settings.html') ? s.url : '/404.html?q=' + encodeURIComponent(s.url);
         tabThing.title = s.label;
         tabThing.searched = true;
         overlay.style.display = 'none';
-        navigateTo(tabThing, dest);
+        navigateTo(tabThing, proxyUrl);
         updateTabs();
       });
 
@@ -775,8 +770,8 @@ if (window.self !== window.top) {
   updateOmnibox();
 
   window.addEventListener('message', (e) => {
-    if (e.data?.type === 'theme-change') { // reload fix
-      window.location.href = window.location.href;
+    if (e.data?.type === 'theme-change') {
+      applyTheme(e.data.theme || localStorage.getItem('theme'));
       return;
     }
     console.log('[index] title received:', e.data, 'from ', e.origin);
