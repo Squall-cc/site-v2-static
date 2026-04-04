@@ -1,1 +1,58 @@
-<!doctypehtml><html lang=en><meta charset=UTF-8><meta content="width=device-width,initial-scale=1"name=viewport><title>aspen</title><script src=/sail/baremux/index.js></script><script src=/sail/scram/scramjet.all.js></script><script>navigator.serviceWorker.register("/sail/sw.js")</script><body><style>iframe{height:95vh;width:100vw;background:#cfcfcf;position:absolute;left:0;bottom:0}</style><input id=bar placeholder=url><button onclick=nav()>Go</button><br><iframe frameborder=0 id=frame src=""></iframe><script>const _0x2e73a5=_0x179e;!function(){const e=_0x179e,a=_0x5bef();for(;;)try{if(648576==-parseInt(e(373))+-parseInt(e(381))/2*(parseInt(e(358))/3)+-parseInt(e(375))/4*(parseInt(e(380))/5)+parseInt(e(379))/6*(-parseInt(e(354))/7)+-parseInt(e(372))/8*(-parseInt(e(378))/9)+-parseInt(e(374))/10*(-parseInt(e(352))/11)+-parseInt(e(370))/12*(-parseInt(e(359))/13))break;a.push(a.shift())}catch(e){a.push(a.shift())}}();const connection=new BareMux[_0x2e73a5(366)]("/sail/baremux/worker.js");connection[_0x2e73a5(376)](_0x2e73a5(353),[{websocket:"wss://monaco-edu.online/wisp/"}]);const bar=document[_0x2e73a5(355)](_0x2e73a5(364)),ScramjetController=$scramjetLoadController().ScramjetController,scramjet=new ScramjetController({files:{all:_0x2e73a5(367),wasm:_0x2e73a5(357),sync:"/sail/scram/scramjet.sync.js"},prefix:"/sail/go/"});function nav(){const e=_0x2e73a5;let a=bar[e(365)].trim();a&&(a[e(371)](".")?a.startsWith("http://")||a[e(377)]("https://")||(a="https://"+a):a=e(356)+encodeURIComponent(a),frame[e(361)]=scramjet.encodeUrl(a))}function _0x179e(e,a){return e-=352,_0x5bef()[e]}scramjet[_0x2e73a5(362)](),bar.addEventListener(_0x2e73a5(360),e=>{"Enter"===e[_0x2e73a5(369)]&&nav()});const params=new URLSearchParams(window[_0x2e73a5(368)].search),q=params[_0x2e73a5(363)]("q");function _0x5bef(){const e=["location","key","335112IPUxRL","includes","8tPvCes","114683PVqvKe","43230ZLQmcp","4AlSYKX","setTransport","startsWith","6049881vawtao","84clSCXR","2740585kvmsRb","248YhxILC","2783vORCFd","/sail/libcurl/index.mjs","526155deXMRH","getElementById","https://duckduckgo.com/search?q=","/sail/scram/scramjet.wasm.wasm","29454OYZlJH","845xtMZgO","keydown","src","init","get","bar","value","BareMuxConnection","/sail/scram/scramjet.all.js"];return(_0x5bef=function(){return e})()}q&&(bar[_0x2e73a5(365)]=q,nav())</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sail - Scramjet</title>
+    <script src="/sail/baremux/index.js"></script>
+    <script src="/sail/scram/scramjet.all.js"></script>
+    <script>
+        navigator.serviceWorker.register("/sail/sw.js")
+    </script>
+</head>
+<body>
+    <style>
+        iframe {
+            height: 100vh;
+            width: 100vw;
+            background: #cfcfcf;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+
+    <iframe src="" frameborder="0" id="frame"></iframe>
+
+    <script>
+        const connection = new BareMux.BareMuxConnection("/sail/baremux/worker.js")
+        connection.setTransport("/sail/libcurl/index.mjs", [{ websocket: "wss://monaco-edu.online/wisp/" }])
+
+        const frame = document.getElementById("frame")
+
+        const { ScramjetController } = $scramjetLoadController()
+        const scramjet = new ScramjetController({
+            files: {
+                all: "/sail/scram/scramjet.all.js",
+                wasm: "/sail/scram/scramjet.wasm.wasm",
+                sync: "/sail/scram/scramjet.sync.js"
+            },
+            prefix: "/sail/go/"
+        })
+        scramjet.init()
+
+        const params = new URLSearchParams(window.location.search)
+        let url = (params.get("q") || "").trim()
+
+        if (url) {
+            if (!url.includes(".")) {
+                url = "https://search.brave.com/search?q=" + encodeURIComponent(url)
+            } else if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "https://" + url
+            }
+            frame.src = scramjet.encodeUrl(url)
+        }
+    </script>  
+    
+</body>
+</html>
