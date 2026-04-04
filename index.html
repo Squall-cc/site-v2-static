@@ -401,7 +401,7 @@ if (window.self !== window.top) {
   // lazy load vanta for perf
   function loadVanta() {
       var s = document.createElement('script');
-      s.src = '/vanta-modified.js';
+      s.src = './vanta-modified.js';
       s.onload = function() {
           try {
               var _vc = getVantaColors();
@@ -448,8 +448,8 @@ if (window.self !== window.top) {
 
   function getDisplayUrl(proxyUrl) {
     if (!proxyUrl) return '';
-    if (proxyUrl.startsWith('/404.html?q=')) {
-      try { return decodeURIComponent(proxyUrl.slice('/404.html?q='.length)); } catch(e) {}
+    if (proxyUrl.startsWith('./404.html?q=')) {
+      try { return decodeURIComponent(proxyUrl.slice('./404.html?q='.length)); } catch(e) {}
     }
     return proxyUrl;
   }
@@ -516,9 +516,9 @@ if (window.self !== window.top) {
   function resolveInput(input) {
     if (/^[^\s]+\.[^\s]+/.test(input)) {
       const withProtocol = /^https?:\/\//i.test(input) ? input : 'https://' + input;
-      return '/404.html?q=' + encodeURIComponent(withProtocol);
+      return './404.html?q=' + encodeURIComponent(withProtocol);
     }
-    return '/404.html?q=' + encodeURIComponent(searchEngine + encodeURIComponent(input));
+    return './404.html?q=' + encodeURIComponent(searchEngine + encodeURIComponent(input));
   }
 
   function createNewTabOverlay(tabThing) {
@@ -556,9 +556,9 @@ if (window.self !== window.top) {
     center.appendChild(input);
 
     const shortcuts = [
-      { label: 'apps', url: '/apps.html', fa: 'fa-solid fa-table-cells' },
-      { label: 'games', url: '/games.html', fa: 'fa-solid fa-gamepad' },
-      { label: 'settings', url: '/settings.html', fa: 'fa-solid fa-gear' },
+      { label: 'apps', url: './apps.html', fa: 'fa-solid fa-table-cells' },
+      { label: 'games', url: './games.html', fa: 'fa-solid fa-gamepad' },
+      { label: 'settings', url: './settings.html', fa: 'fa-solid fa-gear' },
     ];
 
     const row = document.createElement('div');
@@ -576,7 +576,7 @@ if (window.self !== window.top) {
       btn.appendChild(iconEl);
       btn.appendChild(label);
       btn.addEventListener('click', () => {
-        const proxyUrl = (s.url === '/games.html' || s.url === '/apps.html' || s.url === '/settings.html') ? s.url : '/404.html?q=' + encodeURIComponent(s.url);
+        const proxyUrl = (s.url === './games.html' || s.url === './apps.html' || s.url === './settings.html') ? s.url : './404.html?q=' + encodeURIComponent(s.url);
         tabThing.title = s.label;
         tabThing.searched = true;
         overlay.style.display = 'none';
