@@ -7,7 +7,7 @@
     <script src="./sail/baremux/index.js"></script>
     <script src="./sail/scram/scramjet.all.js"></script>
     <script>
-        navigator.serviceWorker.register("./sail/sw.js")
+        navigator.serviceWorker.register(new URL('./', document.baseURI).pathname + "sail/sw.js")
     </script>
 </head>
 <body>
@@ -25,19 +25,20 @@
     <iframe src="" frameborder="0" id="frame"></iframe>
 
     <script>
-        const connection = new BareMux.BareMuxConnection("./sail/baremux/worker.js")
-        connection.setTransport("./sail/libcurl/index.mjs", [{ websocket: "wss://monaco-edu.online/wisp/" }])
+        const base = new URL('./', document.baseURI).pathname;
+        const connection = new BareMux.BareMuxConnection(base + "sail/baremux/worker.js")
+        connection.setTransport(base + "sail/libcurl/index.mjs", [{ websocket: "wss://monaco-edu.online/wisp/" }])
 
         const frame = document.getElementById("frame")
 
         const { ScramjetController } = $scramjetLoadController()
         const scramjet = new ScramjetController({
             files: {
-                all: "./sail/scram/scramjet.all.js",
-                wasm: "./sail/scram/scramjet.wasm.wasm",
-                sync: "./sail/scram/scramjet.sync.js"
+                all: base + "sail/scram/scramjet.all.js",
+                wasm: base + "sail/scram/scramjet.wasm.wasm",
+                sync: base + "sail/scram/scramjet.sync.js"
             },
-            prefix: "./sail/go/"
+            prefix: base + "sail/go/"
         })
         scramjet.init()
 
