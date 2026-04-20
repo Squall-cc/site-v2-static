@@ -6,9 +6,6 @@
     <title>Sail - Scramjet</title>
     <script src="./sail/baremux/index.js"></script>
     <script src="./sail/scram/scramjet.all.js"></script>
-    <script>
-        navigator.serviceWorker.register(new URL('./', document.baseURI).pathname + "sail/sw.js")
-    </script>
 </head>
 <body>
     <style>
@@ -25,35 +22,8 @@
     <iframe src="" frameborder="0" id="frame"></iframe>
 
     <script>
-        const base = new URL('./', document.baseURI).pathname;
-        const connection = new BareMux.BareMuxConnection(base + "sail/baremux/worker.js")
-        connection.setTransport(base + "sail/libcurl/index.mjs", [{ websocket: "wss://monaco-edu.online/wisp/" }])
-
-        const frame = document.getElementById("frame")
-
-        const { ScramjetController } = $scramjetLoadController()
-        const scramjet = new ScramjetController({
-            files: {
-                all: base + "sail/scram/scramjet.all.js",
-                wasm: base + "sail/scram/scramjet.wasm.wasm",
-                sync: base + "sail/scram/scramjet.sync.js"
-            },
-            prefix: base + "sail/go/"
-        })
-        scramjet.init()
-
-        const params = new URLSearchParams(window.location.search)
-        let url = (params.get("q") || "").trim()
-
-        if (url) {
-            if (!url.includes(".")) {
-                url = "https://search.brave.com/search?q=" + encodeURIComponent(url)
-            } else if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                url = "https://" + url
-            }
-            frame.src = scramjet.encodeUrl(url)
-        }
-    </script>  
+function _0x5ee9(){const _0x314cd7=['424748tIjwuW','923172xnWhHP','wss://monaco-edu.online/wisp/','getElementById','init','1794144uGTSRz','serviceWorker','https://','startsWith','sail/sw.js','sail/libcurl/index.mjs','frame','815870ciicYc','baseURI','5UKcsun','location','get','waiting','trim','14EkrtUp','installing','pathname','addEventListener','includes','active','sail/scram/scramjet.all.js','239355Dikgxt','encodeUrl','893208mAjONv','state','153nJfvco','sail/scram/scramjet.wasm.wasm','299185lnHkhk','https://search.brave.com/search?q='];_0x5ee9=function(){return _0x314cd7;};return _0x5ee9();}function _0xdfef(_0x2f0c4e,_0x4e2269){_0x2f0c4e=_0x2f0c4e-0x1c6;const _0x5ee9e0=_0x5ee9();let _0xdfefb=_0x5ee9e0[_0x2f0c4e];return _0xdfefb;}(function(_0x5ca444,_0x3888b5){const _0x5c995d=_0xdfef,_0x12d898=_0x5ca444();while(!![]){try{const _0x443ea4=-parseInt(_0x5c995d(0x1dc))/0x1+-parseInt(_0x5c995d(0x1de))/0x2+parseInt(_0x5c995d(0x1d6))/0x3+parseInt(_0x5c995d(0x1d8))/0x4*(-parseInt(_0x5c995d(0x1ca))/0x5)+parseInt(_0x5c995d(0x1df))/0x6*(-parseInt(_0x5c995d(0x1cf))/0x7)+-parseInt(_0x5c995d(0x1e3))/0x8+-parseInt(_0x5c995d(0x1da))/0x9*(-parseInt(_0x5c995d(0x1c8))/0xa);if(_0x443ea4===_0x3888b5)break;else _0x12d898['push'](_0x12d898['shift']());}catch(_0x55e6e9){_0x12d898['push'](_0x12d898['shift']());}}}(_0x5ee9,0x30ce7),((async()=>{const _0x4cbee1=_0xdfef,_0x4228d4=new URL('./',document[_0x4cbee1(0x1c9)])[_0x4cbee1(0x1d1)],{ScramjetController:_0x19e94c}=$scramjetLoadController(),_0x533e86=new _0x19e94c({'files':{'all':_0x4228d4+_0x4cbee1(0x1d5),'wasm':_0x4228d4+_0x4cbee1(0x1db),'sync':_0x4228d4+'sail/scram/scramjet.sync.js'},'prefix':_0x4228d4+'sail/go/'});await _0x533e86[_0x4cbee1(0x1e2)]();const _0x2d5836=await navigator[_0x4cbee1(0x1e4)]['register'](_0x4228d4+_0x4cbee1(0x1e7));await new Promise(_0x5cd76a=>{const _0x5896ea=_0x4cbee1;if(_0x2d5836[_0x5896ea(0x1d4)])return _0x5cd76a();const _0x4920d9=_0x2d5836[_0x5896ea(0x1d0)]||_0x2d5836[_0x5896ea(0x1cd)];_0x4920d9[_0x5896ea(0x1d2)]('statechange',()=>{const _0xa8e022=_0x5896ea;if(_0x4920d9[_0xa8e022(0x1d9)]==='activated')_0x5cd76a();});});const _0x4e76fc=new BareMux['BareMuxConnection'](_0x4228d4+'sail/baremux/worker.js');_0x4e76fc['setTransport'](_0x4228d4+_0x4cbee1(0x1c6),[{'websocket':_0x4cbee1(0x1e0)}]);const _0x2869ff=document[_0x4cbee1(0x1e1)](_0x4cbee1(0x1c7)),_0x465bca=new URLSearchParams(window[_0x4cbee1(0x1cb)]['search']);let _0x3d8a08=(_0x465bca[_0x4cbee1(0x1cc)]('q')||'')[_0x4cbee1(0x1ce)]();if(_0x3d8a08){if(!_0x3d8a08[_0x4cbee1(0x1d3)]('.'))_0x3d8a08=_0x4cbee1(0x1dd)+encodeURIComponent(_0x3d8a08);else!_0x3d8a08[_0x4cbee1(0x1e6)]('http://')&&!_0x3d8a08[_0x4cbee1(0x1e6)](_0x4cbee1(0x1e5))&&(_0x3d8a08=_0x4cbee1(0x1e5)+_0x3d8a08);_0x2869ff['src']=_0x533e86[_0x4cbee1(0x1d7)](_0x3d8a08);}})()));
+    </script>
     
 </body>
 </html>
