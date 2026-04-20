@@ -67,14 +67,14 @@
             color: var(--green, #a3be8c);
         }
     </style>
-    <script src="/theme.js"></script>
+    <script src="./theme.js"></script>
 </head>
 <body>
     <div class="content">
         <div class="iframe-container">
-            <iframe id="gameframe" class="gameframe" src="/404.html"></iframe>
+            <iframe id="gameframe" class="gameframe" src="./404.html"></iframe>
             <div class="bottom-bar">
-                <a href="/games.html" style="margin-right: auto;"><i class="fas fa-arrow-left"></i></a>
+                <a href="./games.html" style="margin-right: auto;"><i class="fas fa-arrow-left"></i></a>
                 <a href="javascript:void(0)" id="fullscreen"><i class="fas fa-expand"></i></a>
                 <a href="javascript:void(0)" id="reloadbtn"><i class="fas fa-sync-alt"></i></a>
                 <a href="javascript:void(0)" id="copylink"><i class="fas fa-link"></i></a>
@@ -107,11 +107,11 @@
                     })
                     .catch(function() {
                         useSrcdoc = false;
-                        document.getElementById('gameframe').src = '/404.html?q=' + encodeURIComponent(url);
+                        document.getElementById('gameframe').src = './404.html?q=' + encodeURIComponent(url);
                     });
                 } else {
                     loadedUrl = url;
-                    document.getElementById('gameframe').src = '/404.html?q=' + encodeURIComponent(url);
+                    document.getElementById('gameframe').src = './404.html?q=' + encodeURIComponent(url);
                 }
         }
 
