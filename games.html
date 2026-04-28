@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
     <link rel="stylesheet" href="glass.css">
     <script src="theme.js"></script>
-    <script src="./baremux/index.js"></script>
+    <script src="/baremux/index.js"></script>
     <style>
         /* uhh i read somewhere this typa shit fixes firefox issues*/
         *,
@@ -221,6 +221,7 @@
             <option value="ckv.json">Chicken King's Vault</option>
             <option value="frog.json">Frogie's Arcade</option>
             <option value="seraph.json">Seraph</option>
+            <option value="degloved.json">Degloved</option>
         </select>
     </div>
 
@@ -228,16 +229,14 @@
 
 
     <script>
-        const _base = new URL('./', document.baseURI).pathname;
-        const _bareConn = new BareMux.BareMuxConnection(_base + "baremux/worker.js");
-        const _bareClient = new BareMux.BareClient(_base + "baremux/worker.js");
+        const _bareConn = new BareMux.BareMuxConnection("/baremux/worker.js");
+        const _bareClient = new BareMux.BareClient("/baremux/worker.js");
         const _thumbCache = new Map();
         const _wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
         const _transportReady = (async () => {
             try {
-                const _libcurlPath = _base + "libcurl/index.mjs";
-                if ((await _bareConn.getTransport()) !== _libcurlPath) {
-                    await _bareConn.setTransport(_libcurlPath, [{ websocket: _wispUrl }]);
+                if ((await _bareConn.getTransport()) !== "/libcurl/index.mjs") {
+                    await _bareConn.setTransport("/libcurl/index.mjs", [{ websocket: _wispUrl }]);
                 }
             } catch (e) {
                 console.warn("libcurl transport init failed:", e);
@@ -506,7 +505,7 @@
         // lazy-load vanta
         function loadVanta() {
             var s = document.createElement('script');
-            s.src = './vanta-modified.js';
+            s.src = '/vanta-modified.js';
             s.onload = function() {
                 try {
                     var _vc = getVantaColors();
